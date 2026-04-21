@@ -68,16 +68,15 @@ Você também pode visualizar o notebook diretamente:
 ---
 
 ## 📋 Sumário
-1. [Comece por aqui (uso rápido para iniciantes)](#️-comece-por-aqui-uso-rápido-para-iniciantes)
-2. [Sobre o Projeto](#-sobre-o-projeto)
-3. [Contexto do Experimento](#-contexto-do-experimento)
-4. [Fundamentação Teórica](#️-fundamentação-teórica)
-5. [Fluxo de Trabalho (Pipeline)](#️-o-fluxo-de-trabalho-pipeline)
-6. [Funcionalidades](#-funcionalidades-do-notebook)
-7. [Estrutura do Repositório](#-estrutura-do-repositório)
-8. [Guia de Instalação e Uso](#-como-usar)
-9. [Resultados](#-exemplo-de-resultado)
-10. [Citação](#-como-citar)
+1. [Sobre o Projeto](#-sobre-o-projeto)  
+2. [Contexto do Experimento](#-contexto-do-experimento)  
+3. [Fundamentação Teórica](#️-fundamentação-teórica)  
+4. [Fluxo de Trabalho (Pipeline)](#️-o-fluxo-de-trabalho-pipeline)  
+5. [Funcionalidades](#-funcionalidades-do-notebook)  
+6. [Estrutura do Repositório](#-estrutura-do-repositório)  
+7. [Guia de Instalação e Uso](#-como-usar)  
+8. [Resultados](#-exemplo-de-resultado)  
+9. [Citação](#-como-citar)
 
 ---
 
@@ -118,13 +117,26 @@ $$dt = \frac{dx}{v_x} = dx \sqrt{\frac{m}{2qV_{ac}}}$$
 
 ## 🛠️ O Fluxo de Trabalho (Pipeline)
 
-Para garantir a reprodutibilidade dos resultados, o fluxo de dados segue rigorosamente estas etapas:
+O projeto segue um pipeline reprodutível que conecta simulação física, extração de dados e análise numérica:
 
-| Etapa | Ferramenta | Descrição |
-| :--- | :--- | :--- |
-| **1. Simulação** | FEMM | Desenho da geometria física e definição das condições de contorno elétricas. |
-| **2. Exportação** | Lua Script | Execução do `script.lua` para gerar uma grade estruturada $(x, y, E_x, E_y, V)$ em `.csv`. |
-| **3. Análise** | Python/Jupyter | Leitura dos dados, interpolação de campo e cálculo iterativo da trajetória. |
+```mermaid
+flowchart LR
+
+A[FEMM - Simulação eletrostática] --> B[Lua Script - Extração de campo elétrico]
+B --> C[CSV estruturado: x, y, Ex, Ey, V]
+C --> D[Python - Interpolação do campo]
+D --> E[Integração numérica: Euler / Verlet]
+E --> F[Trajetória do elétron]
+F --> G[Comparação experimental - dados de bancada]
+
+style A fill:#d9f2d9,stroke:#2e7d32,stroke-width:1px
+style B fill:#e3f2fd,stroke:#1565c0,stroke-width:1px
+style C fill:#fff3e0,stroke:#ef6c00,stroke-width:1px
+style D fill:#ede7f6,stroke:#5e35b1,stroke-width:1px
+style E fill:#fce4ec,stroke:#c2185b,stroke-width:1px
+style F fill:#e0f7fa,stroke:#00838f,stroke-width:1px
+style G fill:#f3e5f5,stroke:#6a1b9a,stroke-width:1px
+```
 
 ---
 
