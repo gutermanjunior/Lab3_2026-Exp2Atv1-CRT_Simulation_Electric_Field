@@ -1,0 +1,996 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>CRT Simulation Electric Field</title>
+  <style>
+    html {
+      line-height: 1.5;
+      font-family: Georgia, serif;
+      font-size: 20px;
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 1em;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, 'Lucida Console', Consolas, monospace;
+      font-size: 85%;
+      margin: 0;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<div class="cell code" id="GO2Ew81ZsB63">
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> scipy.interpolate <span class="im">as</span> inter</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span></code></pre></div>
+</div>
+<section id="simulação-do-tubo-de-raios-catódicos-trc"
+class="cell markdown" id="2GF5jzPeNGc0">
+<h1>Simulação do Tubo de Raios Catódicos (TRC)</h1>
+<h2 id="objetivo">Objetivo</h2>
+<p>Simular a trajetória do elétron sob campo elétrico obtido via FEMM e
+comparar com dados experimentais.</p>
+<h2 id="estrutura-do-notebook">Estrutura do notebook</h2>
+<ol>
+<li>Definição dos parâmetros</li>
+<li>Importação do campo elétrico</li>
+<li>Aproximação do modelo físico</li>
+<li>Construção da função de campo</li>
+<li>Validação do campo</li>
+<li>Simulação da trajetória</li>
+<li>Ajuste aos dados experimentais</li>
+<li>Trajetória <span class="math inline">(<em>x</em>,<em>y</em>)</span>
+do elétron e impacto na tela</li>
+</ol>
+<h2 id="metodologia">Metodologia</h2>
+<ul>
+<li>Campo elétrico obtido por simulação numérica</li>
+<li>Integração da equação de movimento</li>
+</ul>
+</section>
+<section id="1-parâmetros-físicos-e-geométricos" class="cell markdown"
+id="iDlIuHpxNHUG">
+<h2>1. Parâmetros físicos e geométricos</h2>
+<p>Definição das constantes físicas e parâmetros da simulação.</p>
+</section>
+<div class="cell code" id="k75fiN2fNJM0">
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#@title Parâmetros físicos e geométricos</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># ================= CONSTANTES =================</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>m <span class="op">=</span> <span class="fl">9.11e-31</span>   <span class="co"># massa do elétron (kg)</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>q <span class="op">=</span> <span class="fl">1.6e-19</span>    <span class="co"># carga (valor absoluto)</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co"># ================= TENSÕES =================</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>Vacfixo <span class="op">=</span> np.array([<span class="dv">500</span>,<span class="dv">600</span>,<span class="dv">700</span>,<span class="dv">800</span>,<span class="dv">900</span>,<span class="dv">1000</span>,<span class="dv">1100</span>,<span class="dv">1200</span>,<span class="dv">1400</span>])</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>Vp <span class="op">=</span> np.arange(<span class="fl">1.0</span>, <span class="fl">30.5</span>, <span class="fl">0.5</span>)</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co"># ================= GEOMETRIA =================</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>x_ini <span class="op">=</span> <span class="op">-</span><span class="fl">0.035</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>x_tela <span class="op">=</span> <span class="fl">0.2187</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>dx <span class="op">=</span> <span class="fl">0.0005</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="co"># ================= FEMM =================</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>Vpsim <span class="op">=</span> <span class="fl">1.0</span></span></code></pre></div>
+</div>
+<section id="2-leitura-dos-dados-do-femm" class="cell markdown"
+id="n2sgKY5mNLkZ">
+<h2>2. Leitura dos dados do FEMM</h2>
+<p>Carregamento do campo elétrico exportado.</p>
+</section>
+<div class="cell code"
+data-colab="{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}"
+id="3aqWELo0NMPx" data-outputId="d990d148-44ae-46b7-ed21-18ab011a408f">
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#@title Leitura do CSV do FEMM</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># ================= LEITURA =================</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">&quot;electric_field_data.csv&quot;</span>)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co"># ================= SELEÇÃO DO CORTE =================</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>y_ref <span class="op">=</span> df.loc[df[<span class="st">&quot;y&quot;</span>] <span class="op">&gt;</span> <span class="dv">0</span>, <span class="st">&quot;y&quot;</span>].<span class="bu">min</span>()</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>df_slice <span class="op">=</span> df[np.isclose(df[<span class="st">&quot;y&quot;</span>], y_ref)].copy()</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>df_slice <span class="op">=</span> df_slice.sort_values(<span class="st">&quot;x&quot;</span>)</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co"># ================= CONVERSÕES =================</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>xsim <span class="op">=</span> df_slice[<span class="st">&quot;x&quot;</span>].values <span class="op">/</span> <span class="fl">1000.0</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>Esim <span class="op">=</span> df_slice[<span class="st">&quot;Ey&quot;</span>].values</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;Corte em y =&quot;</span>, y_ref)</span></code></pre></div>
+<div class="output stream stdout">
+<pre><code>Corte em torno de y = 3.3
+Valores únicos de y selecionados: [3.3333]
+</code></pre>
+</div>
+</div>
+<section id="3-aproximação-do-campo-elétrico" class="cell markdown"
+id="RP5KLjTCbLs5">
+<h2>3. Aproximação do campo elétrico</h2>
+<p>Explicação</p>
+</section>
+<section id="31-modelo-adotado" class="cell markdown" id="11w7rWabcyDc">
+<h3>3.1 Modelo Adotado</h3>
+<p>O campo elétrico obtido via FEMM é uma função bidimensional:</p>
+<p><span
+class="math display"><em>E</em><sub><em>y</em></sub> = <em>E</em><sub><em>y</em></sub>(<em>x</em>,<em>y</em>)</span></p>
+<p>ou seja, sua intensidade depende tanto da posição ao longo do eixo
+(<span class="math inline"><em>x</em></span>) quanto da altura (<span
+class="math inline"><em>y</em></span>) entre as placas.</p>
+<p>No entanto, neste modelo foi adotada a seguinte aproximação:</p>
+<p><span
+class="math display"><em>E</em><sub><em>y</em></sub>(<em>x</em>,<em>y</em>) ≈ <em>E</em><sub><em>y</em></sub>(<em>x</em>,<em>y</em><sub>ref</sub>)</span></p>
+<p>onde (<span class="math inline"><em>y</em><sub>ref</sub></span>) é um
+valor próximo de zero, correspondente à região central entre as
+placas.</p>
+<p>Na prática, isso significa que:</p>
+<ul>
+<li>foi selecionado um corte horizontal do campo elétrico no plano
+(<span class="math inline"><em>y</em> ≈ 0</span>)</li>
+<li>a partir desse corte, construiu-se uma função unidimensional (<span
+class="math inline"><em>E</em><sub><em>y</em></sub>(<em>x</em>)</span>)</li>
+<li>essa função é então utilizada para calcular a trajetória do
+elétron</li>
+</ul>
+</section>
+<div class="cell markdown" id="5lZ6AW1ddMPn">
+<p>.</p>
+</div>
+<section id="32-justificativa-de-aproximação" class="cell markdown"
+id="6xIOZMyBc8ze">
+<h3>3.2 Justificativa de aproximação</h3>
+<p>Essa simplificação é válida sob as seguintes condições:</p>
+<ul>
+<li>o feixe de elétrons permanece próximo da região central entre as
+placas</li>
+<li>a variação do campo elétrico com (<span
+class="math inline"><em>y</em></span>) é pequena nessa região</li>
+<li>a deflexão do feixe dentro da região de campo é relativamente
+pequena</li>
+</ul>
+<p>Nessas condições, o campo elétrico pode ser bem aproximado por seu
+valor ao longo do eixo central.</p>
+<p>Essa abordagem reduz significativamente a complexidade do modelo,
+permitindo:</p>
+<ul>
+<li>uma implementação mais simples</li>
+<li>maior estabilidade numérica</li>
+<li>interpretação mais direta dos resultados</li>
+</ul>
+</section>
+<div class="cell markdown" id="F6CMY6amdTN4">
+<p>.</p>
+</div>
+<section id="33-limitações-do-modelo" class="cell markdown"
+id="d6PDn8DGdYty">
+<h3>3.3 Limitações do modelo</h3>
+<p>A principal limitação dessa aproximação é que ela ignora a
+dependência do campo elétrico com a altura (<span
+class="math inline"><em>y</em></span>).</p>
+<p>Na prática, isso significa que:</p>
+<ul>
+<li>a trajetória do elétron é calculada usando sempre o campo
+correspondente ao eixo central</li>
+<li>efeitos de borda e não-uniformidades do campo em (<span
+class="math inline"><em>y</em></span>) não são considerados</li>
+<li>a deflexão pode ser subestimada ou superestimada dependendo da
+geometria</li>
+</ul>
+</section>
+<div class="cell markdown" id="RCKLc50SdgX2">
+<p>.</p>
+</div>
+<section id="35-conclusão" class="cell markdown" id="g5nOIRrDTc35">
+<h3>3.5 Conclusão</h3>
+<p>O modelo adotado representa um compromisso entre simplicidade e
+fidelidade física.</p>
+<p>A aproximação (<span
+class="math inline"><em>E</em><sub><em>y</em></sub>(<em>x</em>,<em>y</em>) ≈ <em>E</em><sub><em>y</em></sub>(<em>x</em>,0)</span>)
+é suficiente para capturar o comportamento principal da deflexão do
+feixe, sendo adequada para análise inicial e fins didáticos.</p>
+<p>A validade dessa aproximação pode ser avaliada comparando os
+resultados da simulação com os dados experimentais obtidos no tubo de
+raios catódicos.</p>
+</section>
+<section id="4-construção-da-função-αx" class="cell markdown"
+id="jdfUzINLNO_N">
+<h2>4. Construção da função α(x)</h2>
+<p>Normalização do campo elétrico obtido no FEMM.</p>
+</section>
+<div class="cell code"
+data-colab="{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}"
+id="FOr8N477NQFT" data-outputId="399b0da1-14e8-4e3e-eb3c-ccb07c871f30">
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#@title Construção da função alfa(x)</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co"># ================= INTERPOLAÇÃO =================</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>alfafunc <span class="op">=</span> inter.interp1d(</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    xsim,</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    Esim <span class="op">/</span> Vpsim,</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    kind<span class="op">=</span><span class="st">&quot;linear&quot;</span>,</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    bounds_error<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    fill_value<span class="op">=</span><span class="fl">0.0</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;Campo máximo:&quot;</span>, np.<span class="bu">max</span>(np.<span class="bu">abs</span>(Esim)), <span class="st">&quot;V/m&quot;</span>)</span></code></pre></div>
+<div class="output stream stdout">
+<pre><code>Campo máximo: 454.5454 V/m
+</code></pre>
+</div>
+</div>
+<section id="5-visualização-do-campo-elétrico" class="cell markdown"
+id="FLSWndDsNRlN">
+<h2>5. Visualização do campo elétrico</h2>
+<p>Verificação do perfil de campo ao longo do eixo x.</p>
+</section>
+<div class="cell code" data-cellView="form"
+data-colab="{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;,&quot;height&quot;:413}"
+id="khzMtt7KNSXI" data-outputId="48f4a979-cad1-4817-cb1f-5e88e95ed64e">
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">#@title Visualização do campo</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co"># ================= EIXO PARA INTERPOLAÇÃO =================</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Cria 400 pontos igualmente espaçados no domínio de x (em metros)</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Usado para visualizar a função contínua α(x)</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>x_plot <span class="op">=</span> np.linspace(<span class="bu">min</span>(xsim), <span class="bu">max</span>(xsim), <span class="dv">400</span>)</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="co"># ================= CONVERSÃO DE UNIDADES =================</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Converter de metros para centímetros para exibição</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>xsim_cm <span class="op">=</span> xsim <span class="op">*</span> <span class="dv">100</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>x_plot_cm <span class="op">=</span> x_plot <span class="op">*</span> <span class="dv">100</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="co"># ================= PLOT =================</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>,<span class="dv">4</span>))</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="co"># -------- Campo (dados discretos do FEMM) --------</span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>plt.subplot(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">1</span>)</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>plt.plot(</span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>    xsim_cm, Esim,</span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>    marker<span class="op">=</span><span class="st">&#39;o&#39;</span>,</span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>    linestyle<span class="op">=</span><span class="st">&#39;None&#39;</span>,</span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>    markersize<span class="op">=</span><span class="dv">4</span></span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&quot;x (cm)&quot;</span>)</span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">&quot;Ey (V/m)&quot;</span>)</span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="ss">f&quot;Campo elétrico Ey (FEMM)</span><span class="ch">\n</span><span class="ss">N = </span><span class="sc">{</span><span class="bu">len</span>(xsim)<span class="sc">}</span><span class="ss"> pontos&quot;</span>)</span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>plt.grid()</span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a><span class="co"># -------- Alfa (função contínua interpolada) --------</span></span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>plt.subplot(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">2</span>)</span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a>plt.plot(</span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a>    x_plot_cm,</span>
+<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a>    alfafunc(x_plot),</span>
+<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a>    linestyle<span class="op">=</span><span class="st">&#39;-&#39;</span>,</span>
+<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a>    linewidth<span class="op">=</span><span class="dv">2</span></span>
+<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb7-37"><a href="#cb7-37" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&quot;x (cm)&quot;</span>)</span>
+<span id="cb7-38"><a href="#cb7-38" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">&quot;α(x) (1/m)&quot;</span>)</span>
+<span id="cb7-39"><a href="#cb7-39" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">&quot;Função α(x) interpolada&quot;</span>)</span>
+<span id="cb7-40"><a href="#cb7-40" aria-hidden="true" tabindex="-1"></a>plt.grid()</span>
+<span id="cb7-41"><a href="#cb7-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-42"><a href="#cb7-42" aria-hidden="true" tabindex="-1"></a><span class="co"># -------- Título geral --------</span></span>
+<span id="cb7-43"><a href="#cb7-43" aria-hidden="true" tabindex="-1"></a>plt.suptitle(<span class="st">&quot;Perfil do campo elétrico ao longo do eixo x&quot;</span>, fontsize<span class="op">=</span><span class="dv">14</span>)</span>
+<span id="cb7-44"><a href="#cb7-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-45"><a href="#cb7-45" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb7-46"><a href="#cb7-46" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div>
+<div class="output display_data">
+<p><img
+src="figures/208e0bb7fcf52ac9fcc275a7e87d79f8a9066e5c.png" /></p>
+</div>
+</div>
+<section id="6-simulação-da-trajetória-do-elétron" class="cell markdown"
+id="nZegpp7HNVC2">
+<h2>6. Simulação da trajetória do elétron</h2>
+<p>Integração da equação de movimento sob o campo elétrico.</p>
+</section>
+<div class="cell code"
+data-colab="{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}"
+id="AJfEhOPuNWzB" data-outputId="7aa5bf4d-2174-4393-8007-54d0aaf5f4d5">
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">#@title Simulação da trajetória</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.arange(x_ini, x_tela <span class="op">+</span> dx, dx)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>yVp <span class="op">=</span> np.zeros((<span class="bu">len</span>(Vacfixo), <span class="bu">len</span>(Vp)))</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="co"># ================= LOOP PRINCIPAL =================</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> k, Vac <span class="kw">in</span> <span class="bu">enumerate</span>(Vacfixo):</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>    dt <span class="op">=</span> dx <span class="op">*</span> np.sqrt(m <span class="op">/</span> (<span class="dv">2</span> <span class="op">*</span> q <span class="op">*</span> Vac))</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> j, Vp_val <span class="kw">in</span> <span class="bu">enumerate</span>(Vp):</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>        y <span class="op">=</span> <span class="fl">0.0</span></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>        vy <span class="op">=</span> <span class="fl">0.0</span></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> x_val <span class="kw">in</span> x:</span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>            E_val <span class="op">=</span> <span class="bu">float</span>(alfafunc(x_val)) <span class="op">*</span> Vp_val</span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>            ay <span class="op">=</span> <span class="op">-</span>q <span class="op">*</span> E_val <span class="op">/</span> m  <span class="co"># elétron</span></span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>            y <span class="op">+=</span> vy<span class="op">*</span>dt <span class="op">+</span> <span class="fl">0.5</span><span class="op">*</span>ay<span class="op">*</span>dt<span class="op">**</span><span class="dv">2</span></span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>            vy <span class="op">+=</span> ay<span class="op">*</span>dt</span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>        <span class="co"># yVp[k, j] armazena diretamente a posição do elétron na tela</span></span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>        yVp[k, j] <span class="op">=</span> y</span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;Ordem de grandeza de y:&quot;</span>, np.<span class="bu">max</span>(np.<span class="bu">abs</span>(yVp)))</span></code></pre></div>
+<div class="output stream stdout">
+<pre><code>Ordem de grandeza de y: 0.08432810071489369
+</code></pre>
+</div>
+</div>
+<section id="7-ajuste-linear-e-comparação-com-experimento"
+class="cell markdown" id="Zhh5lMwENYZG">
+<h2>7. Ajuste linear e comparação com experimento</h2>
+<p>Visualização da simulação e dos dados experimentais.</p>
+</section>
+<section id="71-aplicação-do-mmq-com-odr-e-visualização-final"
+class="cell markdown" id="x8V4tvyDcXy4">
+<h3>7.1 Aplicação do MMQ (com ODR) e visualização final.</h3>
+</section>
+<div class="cell code" data-cellView="form"
+data-colab="{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;,&quot;height&quot;:747}"
+id="ZvPGgV0_Nl92" data-outputId="ebbd0340-7ff6-4efb-d0dc-11cddd770e56">
+<div class="sourceCode" id="cb10"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">#@title Gráfico y vs Vp com MMQ (simulação + experimental opcional)</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co"># ================= IMPORTS =================</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="co"># ODR = Orthogonal Distance Regression (considera incertezas em x e y)</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Aqui usamos como um &quot;MMQ generalizado&quot;</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy <span class="im">import</span> odr <span class="im">as</span> mmq</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="co"># ================= CONFIGURAÇÕES =================</span></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>Vacfix <span class="op">=</span> <span class="dv">1200</span></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>csv_exp <span class="op">=</span> <span class="st">&quot;dados_experimentais.csv&quot;</span></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>tamanho_ponto <span class="op">=</span> <span class="dv">40</span>  <span class="co"># tamanho visual dos pontos</span></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a><span class="co"># ================= SIMULAÇÃO =================</span></span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>idx <span class="op">=</span> np.where(Vacfixo <span class="op">==</span> Vacfix)[<span class="dv">0</span>][<span class="dv">0</span>]</span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>y_vals <span class="op">=</span> yVp[idx] <span class="op">*</span> <span class="dv">100</span>  <span class="co"># m → cm</span></span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a><span class="co"># -------- MMQ SIMULAÇÃO --------</span></span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>coef_sim <span class="op">=</span> np.polyfit(Vp, y_vals, <span class="dv">1</span>)</span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>a_sim, b_sim <span class="op">=</span> coef_sim</span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a>y_fit_sim <span class="op">=</span> a_sim <span class="op">*</span> Vp <span class="op">+</span> b_sim</span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a><span class="co"># métricas</span></span>
+<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a>res_sim <span class="op">=</span> y_vals <span class="op">-</span> y_fit_sim</span>
+<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a>ss_res_sim <span class="op">=</span> np.<span class="bu">sum</span>(res_sim<span class="op">**</span><span class="dv">2</span>)</span>
+<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a>ss_tot_sim <span class="op">=</span> np.<span class="bu">sum</span>((y_vals <span class="op">-</span> np.mean(y_vals))<span class="op">**</span><span class="dv">2</span>)</span>
+<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a>r2_sim <span class="op">=</span> <span class="dv">1</span> <span class="op">-</span> ss_res_sim <span class="op">/</span> ss_tot_sim</span>
+<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a><span class="co"># ================= PLOT =================</span></span>
+<span id="cb10-33"><a href="#cb10-33" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">7</span>,<span class="dv">5</span>))</span>
+<span id="cb10-34"><a href="#cb10-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-35"><a href="#cb10-35" aria-hidden="true" tabindex="-1"></a>plt.plot(</span>
+<span id="cb10-36"><a href="#cb10-36" aria-hidden="true" tabindex="-1"></a>    Vp, y_fit_sim, <span class="st">&#39;-&#39;</span>,</span>
+<span id="cb10-37"><a href="#cb10-37" aria-hidden="true" tabindex="-1"></a>    label<span class="op">=</span><span class="ss">f&quot;Sim: y=(</span><span class="sc">{</span>a_sim<span class="sc">:.2e}</span><span class="ss">)Vp + (</span><span class="sc">{</span>b_sim<span class="sc">:.2e}</span><span class="ss">)&quot;</span></span>
+<span id="cb10-38"><a href="#cb10-38" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb10-39"><a href="#cb10-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-40"><a href="#cb10-40" aria-hidden="true" tabindex="-1"></a><span class="co"># ================= DADOS EXPERIMENTAIS =================</span></span>
+<span id="cb10-41"><a href="#cb10-41" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">Tentando carregar dados experimentais...&quot;</span>)</span>
+<span id="cb10-42"><a href="#cb10-42" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;Formato esperado do CSV: Vp, y, dVp, dy&quot;</span>)</span>
+<span id="cb10-43"><a href="#cb10-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-44"><a href="#cb10-44" aria-hidden="true" tabindex="-1"></a>dados_experimentais_carregados <span class="op">=</span> <span class="va">False</span></span>
+<span id="cb10-45"><a href="#cb10-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-46"><a href="#cb10-46" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
+<span id="cb10-47"><a href="#cb10-47" aria-hidden="true" tabindex="-1"></a>    <span class="co"># -------- LEITURA DO CSV --------</span></span>
+<span id="cb10-48"><a href="#cb10-48" aria-hidden="true" tabindex="-1"></a>    df_exp <span class="op">=</span> pd.read_csv(csv_exp)</span>
+<span id="cb10-49"><a href="#cb10-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-50"><a href="#cb10-50" aria-hidden="true" tabindex="-1"></a>    <span class="co"># -------- VALIDAÇÃO --------</span></span>
+<span id="cb10-51"><a href="#cb10-51" aria-hidden="true" tabindex="-1"></a>    colunas <span class="op">=</span> [<span class="st">&quot;Vp&quot;</span>, <span class="st">&quot;y&quot;</span>, <span class="st">&quot;dVp&quot;</span>, <span class="st">&quot;dy&quot;</span>]</span>
+<span id="cb10-52"><a href="#cb10-52" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> c <span class="kw">in</span> colunas:</span>
+<span id="cb10-53"><a href="#cb10-53" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> c <span class="kw">not</span> <span class="kw">in</span> df_exp.columns:</span>
+<span id="cb10-54"><a href="#cb10-54" aria-hidden="true" tabindex="-1"></a>            <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="ss">f&quot;Coluna &#39;</span><span class="sc">{</span>c<span class="sc">}</span><span class="ss">&#39; não encontrada&quot;</span>)</span>
+<span id="cb10-55"><a href="#cb10-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-56"><a href="#cb10-56" aria-hidden="true" tabindex="-1"></a>    <span class="co"># -------- EXTRAÇÃO --------</span></span>
+<span id="cb10-57"><a href="#cb10-57" aria-hidden="true" tabindex="-1"></a>    Vp_exp <span class="op">=</span> df_exp[<span class="st">&quot;Vp&quot;</span>].values</span>
+<span id="cb10-58"><a href="#cb10-58" aria-hidden="true" tabindex="-1"></a>    y_exp <span class="op">=</span> df_exp[<span class="st">&quot;y&quot;</span>].values</span>
+<span id="cb10-59"><a href="#cb10-59" aria-hidden="true" tabindex="-1"></a>    dVp <span class="op">=</span> df_exp[<span class="st">&quot;dVp&quot;</span>].values</span>
+<span id="cb10-60"><a href="#cb10-60" aria-hidden="true" tabindex="-1"></a>    dy <span class="op">=</span> df_exp[<span class="st">&quot;dy&quot;</span>].values</span>
+<span id="cb10-61"><a href="#cb10-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-62"><a href="#cb10-62" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;✔ Dados experimentais carregados com sucesso.&quot;</span>)</span>
+<span id="cb10-63"><a href="#cb10-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-64"><a href="#cb10-64" aria-hidden="true" tabindex="-1"></a>    <span class="co"># -------- PLOT EXPERIMENTAL --------</span></span>
+<span id="cb10-65"><a href="#cb10-65" aria-hidden="true" tabindex="-1"></a>    plt.errorbar(</span>
+<span id="cb10-66"><a href="#cb10-66" aria-hidden="true" tabindex="-1"></a>        Vp_exp, y_exp,</span>
+<span id="cb10-67"><a href="#cb10-67" aria-hidden="true" tabindex="-1"></a>        xerr<span class="op">=</span>dVp, yerr<span class="op">=</span>dy,</span>
+<span id="cb10-68"><a href="#cb10-68" aria-hidden="true" tabindex="-1"></a>        fmt<span class="op">=</span><span class="st">&#39;o&#39;</span>,</span>
+<span id="cb10-69"><a href="#cb10-69" aria-hidden="true" tabindex="-1"></a>        markersize<span class="op">=</span>tamanho_ponto<span class="op">/</span><span class="dv">5</span>,</span>
+<span id="cb10-70"><a href="#cb10-70" aria-hidden="true" tabindex="-1"></a>        capsize<span class="op">=</span><span class="dv">3</span>,</span>
+<span id="cb10-71"><a href="#cb10-71" aria-hidden="true" tabindex="-1"></a>        label<span class="op">=</span><span class="st">&#39;Experimental&#39;</span></span>
+<span id="cb10-72"><a href="#cb10-72" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb10-73"><a href="#cb10-73" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-74"><a href="#cb10-74" aria-hidden="true" tabindex="-1"></a>    <span class="co"># ================= MMQ (ODR) =================</span></span>
+<span id="cb10-75"><a href="#cb10-75" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-76"><a href="#cb10-76" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> modelo(B, x):</span>
+<span id="cb10-77"><a href="#cb10-77" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> B[<span class="dv">0</span>]<span class="op">*</span>x <span class="op">+</span> B[<span class="dv">1</span>]</span>
+<span id="cb10-78"><a href="#cb10-78" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-79"><a href="#cb10-79" aria-hidden="true" tabindex="-1"></a>    modelo_mmq <span class="op">=</span> mmq.Model(modelo)</span>
+<span id="cb10-80"><a href="#cb10-80" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-81"><a href="#cb10-81" aria-hidden="true" tabindex="-1"></a>    dados_mmq <span class="op">=</span> mmq.RealData(</span>
+<span id="cb10-82"><a href="#cb10-82" aria-hidden="true" tabindex="-1"></a>        Vp_exp,</span>
+<span id="cb10-83"><a href="#cb10-83" aria-hidden="true" tabindex="-1"></a>        y_exp,</span>
+<span id="cb10-84"><a href="#cb10-84" aria-hidden="true" tabindex="-1"></a>        sx<span class="op">=</span>dVp,</span>
+<span id="cb10-85"><a href="#cb10-85" aria-hidden="true" tabindex="-1"></a>        sy<span class="op">=</span>dy</span>
+<span id="cb10-86"><a href="#cb10-86" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb10-87"><a href="#cb10-87" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-88"><a href="#cb10-88" aria-hidden="true" tabindex="-1"></a>    <span class="co"># chute inicial melhorado</span></span>
+<span id="cb10-89"><a href="#cb10-89" aria-hidden="true" tabindex="-1"></a>    ajuste <span class="op">=</span> mmq.ODR(dados_mmq, modelo_mmq, beta0<span class="op">=</span>[a_sim, b_sim])</span>
+<span id="cb10-90"><a href="#cb10-90" aria-hidden="true" tabindex="-1"></a>    resultado <span class="op">=</span> ajuste.run()</span>
+<span id="cb10-91"><a href="#cb10-91" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-92"><a href="#cb10-92" aria-hidden="true" tabindex="-1"></a>    a_exp, b_exp <span class="op">=</span> resultado.beta</span>
+<span id="cb10-93"><a href="#cb10-93" aria-hidden="true" tabindex="-1"></a>    erro_a_exp, erro_b_exp <span class="op">=</span> resultado.sd_beta</span>
+<span id="cb10-94"><a href="#cb10-94" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-95"><a href="#cb10-95" aria-hidden="true" tabindex="-1"></a>    <span class="co"># linha ajustada</span></span>
+<span id="cb10-96"><a href="#cb10-96" aria-hidden="true" tabindex="-1"></a>    Vp_lin <span class="op">=</span> np.linspace(<span class="bu">min</span>(Vp_exp), <span class="bu">max</span>(Vp_exp), <span class="dv">200</span>)</span>
+<span id="cb10-97"><a href="#cb10-97" aria-hidden="true" tabindex="-1"></a>    y_fit_exp <span class="op">=</span> a_exp<span class="op">*</span>Vp_lin <span class="op">+</span> b_exp</span>
+<span id="cb10-98"><a href="#cb10-98" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-99"><a href="#cb10-99" aria-hidden="true" tabindex="-1"></a>    plt.plot(</span>
+<span id="cb10-100"><a href="#cb10-100" aria-hidden="true" tabindex="-1"></a>        Vp_lin, y_fit_exp, <span class="st">&#39;--&#39;</span>,</span>
+<span id="cb10-101"><a href="#cb10-101" aria-hidden="true" tabindex="-1"></a>        label<span class="op">=</span><span class="ss">f&quot;Exp: y=(</span><span class="sc">{</span>a_exp<span class="sc">:.2e}</span><span class="ss">)Vp + (</span><span class="sc">{</span>b_exp<span class="sc">:.2e}</span><span class="ss">)&quot;</span></span>
+<span id="cb10-102"><a href="#cb10-102" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb10-103"><a href="#cb10-103" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-104"><a href="#cb10-104" aria-hidden="true" tabindex="-1"></a>    <span class="co"># métricas (aproximação em y)</span></span>
+<span id="cb10-105"><a href="#cb10-105" aria-hidden="true" tabindex="-1"></a>    y_fit_exp_data <span class="op">=</span> a_exp<span class="op">*</span>Vp_exp <span class="op">+</span> b_exp</span>
+<span id="cb10-106"><a href="#cb10-106" aria-hidden="true" tabindex="-1"></a>    res_exp <span class="op">=</span> y_exp <span class="op">-</span> y_fit_exp_data</span>
+<span id="cb10-107"><a href="#cb10-107" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-108"><a href="#cb10-108" aria-hidden="true" tabindex="-1"></a>    ss_res_exp <span class="op">=</span> np.<span class="bu">sum</span>(res_exp<span class="op">**</span><span class="dv">2</span>)</span>
+<span id="cb10-109"><a href="#cb10-109" aria-hidden="true" tabindex="-1"></a>    ss_tot_exp <span class="op">=</span> np.<span class="bu">sum</span>((y_exp <span class="op">-</span> np.mean(y_exp))<span class="op">**</span><span class="dv">2</span>)</span>
+<span id="cb10-110"><a href="#cb10-110" aria-hidden="true" tabindex="-1"></a>    r2_exp <span class="op">=</span> <span class="dv">1</span> <span class="op">-</span> ss_res_exp <span class="op">/</span> ss_tot_exp  <span class="co"># estimativa</span></span>
+<span id="cb10-111"><a href="#cb10-111" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-112"><a href="#cb10-112" aria-hidden="true" tabindex="-1"></a>    dados_experimentais_carregados <span class="op">=</span> <span class="va">True</span></span>
+<span id="cb10-113"><a href="#cb10-113" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-114"><a href="#cb10-114" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span> <span class="pp">FileNotFoundError</span>:</span>
+<span id="cb10-115"><a href="#cb10-115" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">⚠️ CSV de dados experimentais não encontrado.&quot;</span>)</span>
+<span id="cb10-116"><a href="#cb10-116" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;→ Apenas a simulação será exibida.&quot;</span>)</span>
+<span id="cb10-117"><a href="#cb10-117" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-118"><a href="#cb10-118" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span> pd.errors.EmptyDataError:</span>
+<span id="cb10-119"><a href="#cb10-119" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">⚠️ O arquivo CSV está vazio.&quot;</span>)</span>
+<span id="cb10-120"><a href="#cb10-120" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;→ Apenas a simulação será exibida.&quot;</span>)</span>
+<span id="cb10-121"><a href="#cb10-121" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-122"><a href="#cb10-122" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span> <span class="pp">ValueError</span> <span class="im">as</span> e:</span>
+<span id="cb10-123"><a href="#cb10-123" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">⚠️ Problema nas colunas do CSV:&quot;</span>)</span>
+<span id="cb10-124"><a href="#cb10-124" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;→&quot;</span>, e)</span>
+<span id="cb10-125"><a href="#cb10-125" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;→ Esperado: Vp, y, dVp, dy&quot;</span>)</span>
+<span id="cb10-126"><a href="#cb10-126" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-127"><a href="#cb10-127" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span> <span class="pp">Exception</span> <span class="im">as</span> e:</span>
+<span id="cb10-128"><a href="#cb10-128" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">⚠️ Erro ao processar os dados experimentais:&quot;</span>)</span>
+<span id="cb10-129"><a href="#cb10-129" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;→&quot;</span>, e)</span>
+<span id="cb10-130"><a href="#cb10-130" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-131"><a href="#cb10-131" aria-hidden="true" tabindex="-1"></a><span class="co"># ================= FORMATAÇÃO =================</span></span>
+<span id="cb10-132"><a href="#cb10-132" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="ss">f&#39;Vac = </span><span class="sc">{</span>Vacfix<span class="sc">}</span><span class="ss"> V&#39;</span>)</span>
+<span id="cb10-133"><a href="#cb10-133" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&#39;Vp (V)&#39;</span>)</span>
+<span id="cb10-134"><a href="#cb10-134" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">&#39;y (cm)&#39;</span>)</span>
+<span id="cb10-135"><a href="#cb10-135" aria-hidden="true" tabindex="-1"></a>plt.grid()</span>
+<span id="cb10-136"><a href="#cb10-136" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb10-137"><a href="#cb10-137" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb10-138"><a href="#cb10-138" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-139"><a href="#cb10-139" aria-hidden="true" tabindex="-1"></a><span class="co"># ================= RESULTADOS =================</span></span>
+<span id="cb10-140"><a href="#cb10-140" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-141"><a href="#cb10-141" aria-hidden="true" tabindex="-1"></a><span class="co"># -------- SIMULAÇÃO --------</span></span>
+<span id="cb10-142"><a href="#cb10-142" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">=== MMQ (Simulação) ===&quot;</span>)</span>
+<span id="cb10-143"><a href="#cb10-143" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;Modelo: y = a·Vp + b</span><span class="ch">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb10-144"><a href="#cb10-144" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;a = </span><span class="sc">{</span>a_sim<span class="sc">:.4e}</span><span class="ss"> cm/V&quot;</span>)</span>
+<span id="cb10-145"><a href="#cb10-145" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;b = </span><span class="sc">{</span>b_sim<span class="sc">:.4e}</span><span class="ss"> cm&quot;</span>)</span>
+<span id="cb10-146"><a href="#cb10-146" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;R² = </span><span class="sc">{</span>r2_sim<span class="sc">:.6f}</span><span class="ss">&quot;</span>)</span>
+<span id="cb10-147"><a href="#cb10-147" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-148"><a href="#cb10-148" aria-hidden="true" tabindex="-1"></a><span class="co"># -------- EXPERIMENTAL --------</span></span>
+<span id="cb10-149"><a href="#cb10-149" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> dados_experimentais_carregados:</span>
+<span id="cb10-150"><a href="#cb10-150" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">=== MMQ (Experimental) ===&quot;</span>)</span>
+<span id="cb10-151"><a href="#cb10-151" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;Modelo: y = a·Vp + b</span><span class="ch">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb10-152"><a href="#cb10-152" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-153"><a href="#cb10-153" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f&quot;a = (</span><span class="sc">{</span>a_exp<span class="sc">:.4e}</span><span class="ss"> ± </span><span class="sc">{</span>erro_a_exp<span class="sc">:.2e}</span><span class="ss">) cm/V&quot;</span>)</span>
+<span id="cb10-154"><a href="#cb10-154" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f&quot;b = (</span><span class="sc">{</span>b_exp<span class="sc">:.4e}</span><span class="ss"> ± </span><span class="sc">{</span>erro_b_exp<span class="sc">:.2e}</span><span class="ss">) cm&quot;</span>)</span>
+<span id="cb10-155"><a href="#cb10-155" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-156"><a href="#cb10-156" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">Qualidade do ajuste:&quot;</span>)</span>
+<span id="cb10-157"><a href="#cb10-157" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f&quot;R² = </span><span class="sc">{</span>r2_exp<span class="sc">:.6f}</span><span class="ss">&quot;</span>)</span>
+<span id="cb10-158"><a href="#cb10-158" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f&quot;Resíduo quadrático = </span><span class="sc">{</span>ss_res_exp<span class="sc">:.4e}</span><span class="ss">&quot;</span>)</span>
+<span id="cb10-159"><a href="#cb10-159" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-160"><a href="#cb10-160" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb10-161"><a href="#cb10-161" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">(Dados experimentais não utilizados nesta execução)&quot;</span>)</span></code></pre></div>
+<div class="output stream stdout">
+<pre><code>
+Tentando carregar dados experimentais...
+Formato esperado do CSV: Vp, y, dVp, dy
+
+⚠️ CSV de dados experimentais não encontrado.
+→ Apenas a simulação será exibida.
+</code></pre>
+</div>
+<div class="output display_data">
+<p><img
+src="figures/8adee44595d379d826b89dadf996813538773905.png" /></p>
+</div>
+<div class="output stream stdout">
+<pre><code>
+=== MMQ (Simulação) ===
+Modelo: y = a·Vp + b
+
+a = 1.1712e-01 cm/V
+b = 3.1118e-15 cm
+R² = 1.000000
+
+(Dados experimentais não utilizados nesta execução)
+</code></pre>
+</div>
+</div>
+<section id="72-conclusões" class="cell markdown" id="FtSXngKsNgLA">
+<h3>7.2 Conclusões</h3>
+<ul>
+<li>O modelo reproduz o comportamento linear observado</li>
+<li>O campo obtido no FEMM é consistente com a deflexão</li>
+<li>A inclusão de incertezas melhora o ajuste experimental</li>
+</ul>
+</section>
+<section id="8-trajetória-do-elétron-e-impacto-na-tela"
+class="cell markdown" id="HZr3ibkcV9Rb">
+<h2>8. Trajetória do elétron e impacto na tela</h2>
+<p>Visualização <span class="math inline">(<em>x</em>,<em>y</em>)</span>
+do elétron e marcações na tela dos dados experimentais.</p>
+</section>
+<div class="cell code" data-cellView="form"
+data-colab="{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;,&quot;height&quot;:696}"
+id="XZOecsJDYbHB" data-outputId="f6ec869a-13d5-4bd7-b144-0809280ecb32">
+<div class="sourceCode" id="cb13"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co">#@title Trajetória do elétron + impacto na tela</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co"># ================= CONFIGURAÇÕES =================</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>Vptraj <span class="op">=</span> <span class="fl">10.0</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>csv_exp <span class="op">=</span> <span class="st">&quot;dados_tela.csv&quot;</span>  <span class="co"># opcional</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>          <span class="co"># Arquivo CSV opcional com dados experimentais</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>          <span class="co"># Formato esperado (com cabeçalho):</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>          <span class="co">#</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>          <span class="co"># Vac  → tensão de aceleração (V)</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>          <span class="co"># y    → posição do feixe na tela (cm)</span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>          <span class="co"># dVac → incerteza em Vac (V)</span></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>          <span class="co"># dy   → incerteza em y (cm)</span></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>          <span class="co">#</span></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>          <span class="co"># Exemplo:</span></span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>          <span class="co"># Vac,y,dVac,dy</span></span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>          <span class="co"># 600,2.8,5,0.1</span></span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>          <span class="co"># 800,2.0,5,0.1</span></span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>          <span class="co">#</span></span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>          <span class="co"># Observação:</span></span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>          <span class="co"># - As colunas devem ter exatamente esses nomes</span></span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>          <span class="co"># - As unidades devem ser mantidas conforme indicado</span></span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a><span class="co"># ================= ÍNDICE DO Vp =================</span></span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a>idx_vp <span class="op">=</span> np.argmin(np.<span class="bu">abs</span>(Vp <span class="op">-</span> Vptraj))</span>
+<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a><span class="co"># ================= CONVERSÃO DE UNIDADES =================</span></span>
+<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a>x_cm <span class="op">=</span> x <span class="op">*</span> <span class="dv">100</span>  <span class="co"># m → cm</span></span>
+<span id="cb13-28"><a href="#cb13-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-29"><a href="#cb13-29" aria-hidden="true" tabindex="-1"></a><span class="co"># ================= VAC UTILIZADOS =================</span></span>
+<span id="cb13-30"><a href="#cb13-30" aria-hidden="true" tabindex="-1"></a>Vac_usados <span class="op">=</span> Vacfixo.copy()</span>
+<span id="cb13-31"><a href="#cb13-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-32"><a href="#cb13-32" aria-hidden="true" tabindex="-1"></a><span class="co"># tentar usar Vac dos alunos</span></span>
+<span id="cb13-33"><a href="#cb13-33" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
+<span id="cb13-34"><a href="#cb13-34" aria-hidden="true" tabindex="-1"></a>    df_exp <span class="op">=</span> pd.read_csv(csv_exp)</span>
+<span id="cb13-35"><a href="#cb13-35" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="st">&quot;Vac&quot;</span> <span class="kw">in</span> df_exp.columns:</span>
+<span id="cb13-36"><a href="#cb13-36" aria-hidden="true" tabindex="-1"></a>        Vac_usados <span class="op">=</span> df_exp[<span class="st">&quot;Vac&quot;</span>].values</span>
+<span id="cb13-37"><a href="#cb13-37" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">&quot;✔ Usando valores de Vac dos dados experimentais.&quot;</span>)</span>
+<span id="cb13-38"><a href="#cb13-38" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span>:</span>
+<span id="cb13-39"><a href="#cb13-39" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;⚠️ Usando valores padrão de Vac da simulação.&quot;</span>)</span>
+<span id="cb13-40"><a href="#cb13-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-41"><a href="#cb13-41" aria-hidden="true" tabindex="-1"></a><span class="co"># ================= PLOT =================</span></span>
+<span id="cb13-42"><a href="#cb13-42" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">7</span>,<span class="dv">5</span>))</span>
+<span id="cb13-43"><a href="#cb13-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-44"><a href="#cb13-44" aria-hidden="true" tabindex="-1"></a>y_tela_lista <span class="op">=</span> []</span>
+<span id="cb13-45"><a href="#cb13-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-46"><a href="#cb13-46" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> Vac_val <span class="kw">in</span> Vac_usados:</span>
+<span id="cb13-47"><a href="#cb13-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-48"><a href="#cb13-48" aria-hidden="true" tabindex="-1"></a>    <span class="co"># índice mais próximo no array da simulação</span></span>
+<span id="cb13-49"><a href="#cb13-49" aria-hidden="true" tabindex="-1"></a>    idx_vac <span class="op">=</span> np.argmin(np.<span class="bu">abs</span>(Vacfixo <span class="op">-</span> Vac_val))</span>
+<span id="cb13-50"><a href="#cb13-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-51"><a href="#cb13-51" aria-hidden="true" tabindex="-1"></a>    <span class="co"># recalcular trajetória (ou usar já calculada se tiver y completo)</span></span>
+<span id="cb13-52"><a href="#cb13-52" aria-hidden="true" tabindex="-1"></a>    vy <span class="op">=</span> <span class="fl">0.0</span></span>
+<span id="cb13-53"><a href="#cb13-53" aria-hidden="true" tabindex="-1"></a>    y_pos <span class="op">=</span> <span class="fl">0.0</span></span>
+<span id="cb13-54"><a href="#cb13-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-55"><a href="#cb13-55" aria-hidden="true" tabindex="-1"></a>    y_traj <span class="op">=</span> []</span>
+<span id="cb13-56"><a href="#cb13-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-57"><a href="#cb13-57" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> xi <span class="kw">in</span> x:</span>
+<span id="cb13-58"><a href="#cb13-58" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> xi <span class="op">&lt;</span> np.<span class="bu">max</span>(xsim):</span>
+<span id="cb13-59"><a href="#cb13-59" aria-hidden="true" tabindex="-1"></a>            E <span class="op">=</span> alfafunc(xi) <span class="op">*</span> Vptraj</span>
+<span id="cb13-60"><a href="#cb13-60" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
+<span id="cb13-61"><a href="#cb13-61" aria-hidden="true" tabindex="-1"></a>            E <span class="op">=</span> <span class="fl">0.0</span></span>
+<span id="cb13-62"><a href="#cb13-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-63"><a href="#cb13-63" aria-hidden="true" tabindex="-1"></a>        dt <span class="op">=</span> dx <span class="op">*</span> np.sqrt(m <span class="op">/</span> (<span class="dv">2</span> <span class="op">*</span> q <span class="op">*</span> Vac_val))</span>
+<span id="cb13-64"><a href="#cb13-64" aria-hidden="true" tabindex="-1"></a>        ay <span class="op">=</span> <span class="op">-</span>q <span class="op">*</span> E <span class="op">/</span> m</span>
+<span id="cb13-65"><a href="#cb13-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-66"><a href="#cb13-66" aria-hidden="true" tabindex="-1"></a>        y_pos <span class="op">=</span> y_pos <span class="op">+</span> vy<span class="op">*</span>dt <span class="op">+</span> <span class="fl">0.5</span><span class="op">*</span>ay<span class="op">*</span>dt<span class="op">**</span><span class="dv">2</span></span>
+<span id="cb13-67"><a href="#cb13-67" aria-hidden="true" tabindex="-1"></a>        vy <span class="op">=</span> vy <span class="op">+</span> ay<span class="op">*</span>dt</span>
+<span id="cb13-68"><a href="#cb13-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-69"><a href="#cb13-69" aria-hidden="true" tabindex="-1"></a>        y_traj.append(y_pos)</span>
+<span id="cb13-70"><a href="#cb13-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-71"><a href="#cb13-71" aria-hidden="true" tabindex="-1"></a>    y_traj <span class="op">=</span> np.array(y_traj) <span class="op">*</span> <span class="dv">100</span>  <span class="co"># m → cm</span></span>
+<span id="cb13-72"><a href="#cb13-72" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-73"><a href="#cb13-73" aria-hidden="true" tabindex="-1"></a>    <span class="co"># salvar ponto final</span></span>
+<span id="cb13-74"><a href="#cb13-74" aria-hidden="true" tabindex="-1"></a>    y_tela <span class="op">=</span> y_traj[<span class="op">-</span><span class="dv">1</span>]</span>
+<span id="cb13-75"><a href="#cb13-75" aria-hidden="true" tabindex="-1"></a>    y_tela_lista.append(y_tela)</span>
+<span id="cb13-76"><a href="#cb13-76" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-77"><a href="#cb13-77" aria-hidden="true" tabindex="-1"></a>    <span class="co"># plot trajetória</span></span>
+<span id="cb13-78"><a href="#cb13-78" aria-hidden="true" tabindex="-1"></a>    plt.plot(x_cm, y_traj, label<span class="op">=</span><span class="ss">f&quot;Vac = </span><span class="sc">{</span>Vac_val<span class="sc">:.0f}</span><span class="ss"> V&quot;</span>)</span>
+<span id="cb13-79"><a href="#cb13-79" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-80"><a href="#cb13-80" aria-hidden="true" tabindex="-1"></a>    <span class="co"># ponto na tela</span></span>
+<span id="cb13-81"><a href="#cb13-81" aria-hidden="true" tabindex="-1"></a>    plt.scatter(x_cm[<span class="op">-</span><span class="dv">1</span>], y_tela, s<span class="op">=</span><span class="dv">40</span>)</span>
+<span id="cb13-82"><a href="#cb13-82" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-83"><a href="#cb13-83" aria-hidden="true" tabindex="-1"></a><span class="co"># ================= FORMATAÇÃO =================</span></span>
+<span id="cb13-84"><a href="#cb13-84" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="ss">f&quot;Trajetória do elétron (Vp = </span><span class="sc">{</span>Vptraj<span class="sc">:.2f}</span><span class="ss"> V)&quot;</span>)</span>
+<span id="cb13-85"><a href="#cb13-85" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&quot;x (cm)&quot;</span>)</span>
+<span id="cb13-86"><a href="#cb13-86" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">&quot;y (cm)&quot;</span>)</span>
+<span id="cb13-87"><a href="#cb13-87" aria-hidden="true" tabindex="-1"></a>plt.grid()</span>
+<span id="cb13-88"><a href="#cb13-88" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb13-89"><a href="#cb13-89" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-90"><a href="#cb13-90" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb13-91"><a href="#cb13-91" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-92"><a href="#cb13-92" aria-hidden="true" tabindex="-1"></a><span class="co"># ================= VALORES NA TELA =================</span></span>
+<span id="cb13-93"><a href="#cb13-93" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">=== Posição na tela (simulação) ===&quot;</span>)</span>
+<span id="cb13-94"><a href="#cb13-94" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> Vac_val, y_val <span class="kw">in</span> <span class="bu">zip</span>(Vac_usados, y_tela_lista):</span>
+<span id="cb13-95"><a href="#cb13-95" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f&quot;Vac = </span><span class="sc">{</span>Vac_val<span class="sc">:.0f}</span><span class="ss"> V → y = </span><span class="sc">{</span>y_val<span class="sc">:.3f}</span><span class="ss"> cm&quot;</span>)</span></code></pre></div>
+<div class="output stream stdout">
+<pre><code>⚠️ Usando valores padrão de Vac da simulação.
+</code></pre>
+</div>
+<div class="output display_data">
+<p><img
+src="figures/bc61f789391ba2fa51f854d83fd9f6ab0ac4b0bb.png" /></p>
+</div>
+<div class="output stream stdout">
+<pre><code>
+=== Posição na tela (simulação) ===
+Vac = 500 V → y = 2.811 cm
+Vac = 600 V → y = 2.342 cm
+Vac = 700 V → y = 2.008 cm
+Vac = 800 V → y = 1.757 cm
+Vac = 900 V → y = 1.562 cm
+Vac = 1000 V → y = 1.405 cm
+Vac = 1100 V → y = 1.278 cm
+Vac = 1200 V → y = 1.171 cm
+Vac = 1400 V → y = 1.004 cm
+</code></pre>
+</div>
+</div>
+<section id="em-teste" class="cell markdown" id="nPXT951chD0G">
+<h3>...em teste</h3>
+</section>
+<div class="cell code" data-cellView="form"
+data-colab="{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}"
+id="M6CU1z6qV-9c" data-outputId="f2481797-bd14-492e-c82b-bef5147309fa">
+<div class="sourceCode" id="cb16"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># @title TESTE, em desenvolvimento</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="co"># ==========================================================</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="co"># BLOCO: Impacto na tela — Simulação vs Experimento</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="co"># ----------------------------------------------------------</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Autor: [Seu Nome]</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Data: [DD/MM/AAAA]</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Versão: 0.1</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Objetivo:</span></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Comparar a posição de impacto na tela obtida por simulação</span></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a><span class="co"># com dados experimentais, incluindo incertezas.</span></span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Entradas:</span></span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a><span class="co"># - Vptraj: tensão de placa selecionada (Vp)</span></span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a><span class="co"># - Vacfixo: vetor de tensões de aceleração</span></span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a><span class="co"># - yVp: matriz de trajetórias simuladas</span></span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a><span class="co"># - csv_exp: arquivo com dados experimentais</span></span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Saídas:</span></span>
+<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a><span class="co"># - Gráfico comparativo (simulação vs experimento)</span></span>
+<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a><span class="co"># - Intervalo de valores simulados na tela</span></span>
+<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb16-23"><a href="#cb16-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Observações:</span></span>
+<span id="cb16-24"><a href="#cb16-24" aria-hidden="true" tabindex="-1"></a><span class="co"># - Executar após a simulação completa da trajetória</span></span>
+<span id="cb16-25"><a href="#cb16-25" aria-hidden="true" tabindex="-1"></a><span class="co"># - Se não houver dados experimentais, plota apenas simulação</span></span>
+<span id="cb16-26"><a href="#cb16-26" aria-hidden="true" tabindex="-1"></a><span class="co"># ==========================================================</span></span>
+<span id="cb16-27"><a href="#cb16-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-28"><a href="#cb16-28" aria-hidden="true" tabindex="-1"></a><span class="co"># ================= CONFIGURAÇÕES =================</span></span>
+<span id="cb16-29"><a href="#cb16-29" aria-hidden="true" tabindex="-1"></a>Vptraj <span class="op">=</span> <span class="fl">10.0</span>                 <span class="co"># valor de Vp usado pelo aluno</span></span>
+<span id="cb16-30"><a href="#cb16-30" aria-hidden="true" tabindex="-1"></a>csv_exp <span class="op">=</span> <span class="st">&quot;dados_tela.csv&quot;</span>   <span class="co"># arquivo experimental (opcional)</span></span>
+<span id="cb16-31"><a href="#cb16-31" aria-hidden="true" tabindex="-1"></a>tamanho_ponto <span class="op">=</span> <span class="dv">50</span></span>
+<span id="cb16-32"><a href="#cb16-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-33"><a href="#cb16-33" aria-hidden="true" tabindex="-1"></a><span class="co"># ================= ÍNDICE DO Vp =================</span></span>
+<span id="cb16-34"><a href="#cb16-34" aria-hidden="true" tabindex="-1"></a>idx_vp <span class="op">=</span> np.argmin(np.<span class="bu">abs</span>(Vp <span class="op">-</span> Vptraj))</span>
+<span id="cb16-35"><a href="#cb16-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-36"><a href="#cb16-36" aria-hidden="true" tabindex="-1"></a><span class="co"># ================= EXTRAÇÃO DO PONTO NA TELA =================</span></span>
+<span id="cb16-37"><a href="#cb16-37" aria-hidden="true" tabindex="-1"></a><span class="co"># último ponto da trajetória em x</span></span>
+<span id="cb16-38"><a href="#cb16-38" aria-hidden="true" tabindex="-1"></a>y_tela_sim <span class="op">=</span> yVp[:, idx_vp] <span class="op">*</span> <span class="dv">100</span>  <span class="co"># converter m → cm</span></span>
+<span id="cb16-39"><a href="#cb16-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-40"><a href="#cb16-40" aria-hidden="true" tabindex="-1"></a><span class="co"># ================= PLOT =================</span></span>
+<span id="cb16-41"><a href="#cb16-41" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">7</span>,<span class="dv">5</span>))</span>
+<span id="cb16-42"><a href="#cb16-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-43"><a href="#cb16-43" aria-hidden="true" tabindex="-1"></a><span class="co"># -------- SIMULAÇÃO --------</span></span>
+<span id="cb16-44"><a href="#cb16-44" aria-hidden="true" tabindex="-1"></a>plt.plot(</span>
+<span id="cb16-45"><a href="#cb16-45" aria-hidden="true" tabindex="-1"></a>    Vacfixo,</span>
+<span id="cb16-46"><a href="#cb16-46" aria-hidden="true" tabindex="-1"></a>    y_tela_sim,</span>
+<span id="cb16-47"><a href="#cb16-47" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;-o&#39;</span>,</span>
+<span id="cb16-48"><a href="#cb16-48" aria-hidden="true" tabindex="-1"></a>    label<span class="op">=</span><span class="st">&#39;Simulação&#39;</span></span>
+<span id="cb16-49"><a href="#cb16-49" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb16-50"><a href="#cb16-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-51"><a href="#cb16-51" aria-hidden="true" tabindex="-1"></a><span class="co"># ================= DADOS EXPERIMENTAIS =================</span></span>
+<span id="cb16-52"><a href="#cb16-52" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">Tentando carregar dados experimentais (formato esperado: Vac, y, dVac, dy)...&quot;</span>)</span>
+<span id="cb16-53"><a href="#cb16-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-54"><a href="#cb16-54" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
+<span id="cb16-55"><a href="#cb16-55" aria-hidden="true" tabindex="-1"></a>    df_exp <span class="op">=</span> pd.read_csv(csv_exp)</span>
+<span id="cb16-56"><a href="#cb16-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-57"><a href="#cb16-57" aria-hidden="true" tabindex="-1"></a>    <span class="co"># -------- VALIDAÇÃO --------</span></span>
+<span id="cb16-58"><a href="#cb16-58" aria-hidden="true" tabindex="-1"></a>    colunas <span class="op">=</span> [<span class="st">&quot;Vac&quot;</span>, <span class="st">&quot;y&quot;</span>, <span class="st">&quot;dVac&quot;</span>, <span class="st">&quot;dy&quot;</span>]</span>
+<span id="cb16-59"><a href="#cb16-59" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> c <span class="kw">in</span> colunas:</span>
+<span id="cb16-60"><a href="#cb16-60" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> c <span class="kw">not</span> <span class="kw">in</span> df_exp.columns:</span>
+<span id="cb16-61"><a href="#cb16-61" aria-hidden="true" tabindex="-1"></a>            <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="ss">f&quot;Coluna &#39;</span><span class="sc">{</span>c<span class="sc">}</span><span class="ss">&#39; não encontrada&quot;</span>)</span>
+<span id="cb16-62"><a href="#cb16-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-63"><a href="#cb16-63" aria-hidden="true" tabindex="-1"></a>    <span class="co"># -------- EXTRAÇÃO --------</span></span>
+<span id="cb16-64"><a href="#cb16-64" aria-hidden="true" tabindex="-1"></a>    Vac_exp <span class="op">=</span> df_exp[<span class="st">&quot;Vac&quot;</span>].values</span>
+<span id="cb16-65"><a href="#cb16-65" aria-hidden="true" tabindex="-1"></a>    y_exp <span class="op">=</span> df_exp[<span class="st">&quot;y&quot;</span>].values</span>
+<span id="cb16-66"><a href="#cb16-66" aria-hidden="true" tabindex="-1"></a>    dVac <span class="op">=</span> df_exp[<span class="st">&quot;dVac&quot;</span>].values</span>
+<span id="cb16-67"><a href="#cb16-67" aria-hidden="true" tabindex="-1"></a>    dy <span class="op">=</span> df_exp[<span class="st">&quot;dy&quot;</span>].values</span>
+<span id="cb16-68"><a href="#cb16-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-69"><a href="#cb16-69" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;✔ Dados experimentais carregados.&quot;</span>)</span>
+<span id="cb16-70"><a href="#cb16-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-71"><a href="#cb16-71" aria-hidden="true" tabindex="-1"></a>    <span class="co"># -------- PLOT EXPERIMENTAL --------</span></span>
+<span id="cb16-72"><a href="#cb16-72" aria-hidden="true" tabindex="-1"></a>    plt.errorbar(</span>
+<span id="cb16-73"><a href="#cb16-73" aria-hidden="true" tabindex="-1"></a>        Vac_exp, y_exp,</span>
+<span id="cb16-74"><a href="#cb16-74" aria-hidden="true" tabindex="-1"></a>        xerr<span class="op">=</span>dVac, yerr<span class="op">=</span>dy,</span>
+<span id="cb16-75"><a href="#cb16-75" aria-hidden="true" tabindex="-1"></a>        fmt<span class="op">=</span><span class="st">&#39;o&#39;</span>,</span>
+<span id="cb16-76"><a href="#cb16-76" aria-hidden="true" tabindex="-1"></a>        markersize<span class="op">=</span>tamanho_ponto<span class="op">/</span><span class="dv">5</span>,</span>
+<span id="cb16-77"><a href="#cb16-77" aria-hidden="true" tabindex="-1"></a>        capsize<span class="op">=</span><span class="dv">3</span>,</span>
+<span id="cb16-78"><a href="#cb16-78" aria-hidden="true" tabindex="-1"></a>        label<span class="op">=</span><span class="st">&#39;Experimental&#39;</span></span>
+<span id="cb16-79"><a href="#cb16-79" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb16-80"><a href="#cb16-80" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-81"><a href="#cb16-81" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span> <span class="pp">Exception</span> <span class="im">as</span> e:</span>
+<span id="cb16-82"><a href="#cb16-82" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">⚠️ Dados experimentais não disponíveis.&quot;</span>)</span>
+<span id="cb16-83"><a href="#cb16-83" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;→ Apenas a simulação será exibida.&quot;</span>)</span>
+<span id="cb16-84"><a href="#cb16-84" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;→ Detalhe:&quot;</span>, e)</span>
+<span id="cb16-85"><a href="#cb16-85" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-86"><a href="#cb16-86" aria-hidden="true" tabindex="-1"></a><span class="co"># ================= FORMATAÇÃO =================</span></span>
+<span id="cb16-87"><a href="#cb16-87" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="ss">f&quot;Impacto na tela vs Vac (Vp = </span><span class="sc">{</span>Vptraj<span class="sc">:.2f}</span><span class="ss"> V)&quot;</span>)</span>
+<span id="cb16-88"><a href="#cb16-88" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&quot;Vac (V)&quot;</span>)</span>
+<span id="cb16-89"><a href="#cb16-89" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">&quot;y na tela (cm)&quot;</span>)</span>
+<span id="cb16-90"><a href="#cb16-90" aria-hidden="true" tabindex="-1"></a>plt.grid()</span>
+<span id="cb16-91"><a href="#cb16-91" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb16-92"><a href="#cb16-92" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-93"><a href="#cb16-93" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb16-94"><a href="#cb16-94" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-95"><a href="#cb16-95" aria-hidden="true" tabindex="-1"></a><span class="co"># ================= INFORMAÇÃO ADICIONAL =================</span></span>
+<span id="cb16-96"><a href="#cb16-96" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">Intervalo da simulação:&quot;</span>)</span>
+<span id="cb16-97"><a href="#cb16-97" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;y mínimo = </span><span class="sc">{</span>np<span class="sc">.</span><span class="bu">min</span>(y_tela_sim)<span class="sc">:.3f}</span><span class="ss"> cm&quot;</span>)</span>
+<span id="cb16-98"><a href="#cb16-98" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;y máximo = </span><span class="sc">{</span>np<span class="sc">.</span><span class="bu">max</span>(y_tela_sim)<span class="sc">:.3f}</span><span class="ss"> cm&quot;</span>)</span></code></pre></div>
+<div class="output stream stdout">
+<pre><code>
+Tentando carregar dados experimentais (formato esperado: Vac, y, dVac, dy)...
+
+⚠️ Dados experimentais não disponíveis.
+→ Apenas a simulação será exibida.
+→ Detalhe: [Errno 2] No such file or directory: &#39;dados_tela.csv&#39;
+</code></pre>
+</div>
+<div class="output display_data">
+<p><img
+src="figures/87260ed62983b07263ba33859ef74ba8d9f1e5aa.png" /></p>
+</div>
+<div class="output stream stdout">
+<pre><code>
+Intervalo da simulação:
+y mínimo = 1.004 cm
+y máximo = 2.811 cm
+</code></pre>
+</div>
+</div>
+</body>
+</html>

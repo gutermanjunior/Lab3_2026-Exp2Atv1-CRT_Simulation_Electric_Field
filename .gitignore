@@ -1,0 +1,40 @@
+# =========================
+# Jupyter Notebook
+# =========================
+# Ignora as pastas ocultas de checkpoint que o Jupyter cria automaticamente
+.ipynb_checkpoints/
+
+# =========================
+# Exportações e Lixo
+# =========================
+# Ignora os HTMLs para garantir que os arquivos quebrados não subam por engano
+*.html
+
+# =========================
+# FEMM (Finite Element Method Magnetics)
+# =========================
+# O FEMM gera arquivos pesados de malha e resultados após rodar a simulação.
+# Como qualquer pessoa pode gerar isso abrindo o seu .fee, não precisa ir pro GitHub.
+*.res
+*.ans
+*.anh
+
+# =========================
+# Python
+# =========================
+# Ignora caches caso você transforme alguma parte do notebook em um script .py no futuro
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Ignora ambientes virtuais
+venv/
+env/
+.env
+
+# =========================
+# Arquivos de Sistema
+# =========================
+# Lixos gerados pelo Windows ou Mac
+Thumbs.db
+.DS_Store

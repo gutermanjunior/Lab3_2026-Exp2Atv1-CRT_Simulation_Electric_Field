@@ -1,0 +1,36 @@
+# ========================================
+# Configurações Globais de Texto
+# ========================================
+# Auto detect text files and perform LF normalization
+* text=auto
+
+# ========================================
+# Linguagem e Identificação
+# ========================================
+# Garante que o GitHub identifique o projeto como Python
+*.ipynb linguist-language=Python
+*.lua linguist-language=Lua
+
+# ========================================
+# Tratamento de Fim de Linha (Line Endings)
+# ========================================
+# Garante que arquivos de texto usem LF (padrão Linux) mesmo no Windows
+# Isso evita que o Git acuse mudanças em todas as linhas por causa de CRLF
+*.py text eol=lf
+*.lua text eol=lf
+*.csv text eol=lf
+*.md text eol=lf
+*.cff text eol=lf
+
+# ========================================
+# Notebooks e Diferenças (Diffs)
+# ========================================
+# Notebooks são JSONs gigantes. Isso aqui ajuda o Git a não tentar
+# "mesclar" as saídas de gráficos automaticamente, o que costuma quebrar o arquivo.
+*.ipynb binary
+
+# ========================================
+# Arquivos de Dados
+# ========================================
+# Trata o CSV como texto para que você possa ver o diff se poucas linhas mudarem
+*.csv text

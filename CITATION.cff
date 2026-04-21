@@ -1,0 +1,10 @@
+cff-version: 1.2.0
+message: "Se você usar este software, por favor cite-o como abaixo."
+authors:
+  - family-names: "Rodrigues de Araujo Junior"
+    given-names: "Guterman"
+    orcid: "https://orcid.org/0009-0004-8076-0516" # Se tiver ORCID, coloque aqui
+title: "Simulador de Trajetória de Elétrons em TRC - Exp2Atv1 4302213-2026(IFUSP)"
+version: 1.0.0
+date-released: 2026-04-20
+url: "https://github.com/gutermanjunior/Lab3_2026-Exp2Atv1-CRT_Simulation_Electric_Field"
