@@ -14,16 +14,70 @@
 
 ---
 
+> 📘 **Sobre este texto:**  
+> Este é o README do projeto. Aqui você encontra instruções de uso, explicações teóricas e o passo a passo da simulação.  
+> Se estiver em dúvida sobre como rodar ou entender o experimento, comece lendo aqui.
+
+---
+
+## 🧾 TL;DR
+
+Simulação numérica da trajetória de elétrons em um Tubo de Raios Catódicos (TRC), combinando dados de campo elétrico obtidos via FEMM com integração numérica em Python para modelar a deflexão do feixe e comparar com resultados experimentais.
+
+---
+
+## ⚠️ Comece por aqui (uso rápido para iniciantes)
+
+Se você só quer rodar a simulação, **este é o único arquivo que você precisa baixar:**
+
+📥 **Notebook principal:**  
+[Exp2Atv1 simulacao_TRC Guterman.ipynb](https://github.com/gutermanjunior/Lab3_2026-Exp2Atv1-CRT_Simulation_Electric_Field/blob/main/Exp2Atv1%20simulacao_TRC%20Guterman.ipynb)
+
+---
+
+### 🔽 Como baixar o arquivo
+
+1. Clique no link acima.
+2. Na página do GitHub, clique no botão **"Download"** ou **"Raw"** (canto superior direito).
+3. Salve o arquivo `.ipynb` no seu computador.
+
+---
+
+### ▶️ Como abrir no Google Colab (recomendado)
+
+A forma mais simples de usar o notebook é pelo Google Colab (roda direto no navegador):
+
+1. Acesse: https://colab.research.google.com/
+2. Clique na aba **"Upload" (Enviar)**.
+3. Selecione o arquivo `.ipynb` que você baixou.
+4. Após abrir, vá em **Ambiente de execução → Executar tudo**.
+
+💡 Não é necessário instalar Python nem bibliotecas — o Colab já vem pronto para uso.
+
+---
+
+### ✅ Alternativa (sem baixar)
+
+Você também pode visualizar o notebook diretamente:
+
+👉 GitHub Pages (mais interativo)  
+👉 NBViewer (mais estável)
+
+*(links disponíveis mais abaixo neste README)*
+
+---
+
 ## 📋 Sumário
-1. [Sobre o Projeto](#-sobre-o-projeto)
-2. [Contexto do Experimento](#-contexto-do-experimento)
-3. [Fundamentação Teórica](#-fundamentação-teórica)
-4. [Fluxo de Trabalho (Pipeline)](#-o-fluxo-de-trabalho-pipeline)
-5. [Funcionalidades](#-funcionalidades-do-notebook)
-6. [Estrutura do Repositório](#-estrutura-do-repositório)
-7. [Guia de Instalação e Uso](#-como-usar)
-8. [Resultados](#-exemplo-de-resultado)
-9. [Citação](#-como-citar)
+1. [Comece por aqui (uso rápido para iniciantes)](#️-comece-por-aqui-uso-rápido-para-iniciantes)
+2. [Sobre o Projeto](#-sobre-o-projeto)
+3. [Contexto do Experimento](#-contexto-do-experimento)
+4. [Fundamentação Teórica](#️-fundamentação-teórica)
+5. [Fluxo de Trabalho (Pipeline)](#️-o-fluxo-de-trabalho-pipeline)
+6. [Funcionalidades](#-funcionalidades-do-notebook)
+7. [Estrutura do Repositório](#-estrutura-do-repositório)
+8. [Guia de Instalação e Uso](#-como-usar)
+9. [Resultados](#-exemplo-de-resultado)
+10. [Citação](#-como-citar)
 
 ---
 
@@ -106,6 +160,7 @@ Caso ocorra algum problema de carregamento ou compatibilidade, utilize a versão
 ├── electric_field_data.csv                # Banco de dados de exemplo (saída do FEMM)
 ├── script.lua                             # Automação para extração de dados no FEMM
 └── README.md                              # Documentação do projeto
+```
 
 ---
 
