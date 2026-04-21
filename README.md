@@ -20,6 +20,12 @@
 
 ---
 
+![Simulação TRC](figures/bc61f789391ba2fa51f854d83fd9f6ab0ac4b0bb.png)
+
+*Figura: Simulação da trajetória de elétrons no TRC sob ação de campo elétrico obtido via FEMM.*
+
+---
+
 ## 🧾 TL;DR
 
 Simulação numérica da trajetória de elétrons em um Tubo de Raios Catódicos (TRC), combinando dados de campo elétrico obtidos via FEMM com integração numérica em Python para modelar a deflexão do feixe e comparar com resultados experimentais.
@@ -180,7 +186,7 @@ Caso ocorra algum problema de carregamento ou compatibilidade, utilize a versão
 
 1.  **Clone o repositório:**
     ```bash
-    git clone [https://github.com/gutermanjunior/Lab3_2026-Exp2Atv1-CRT_Simulation_Electric_Field.git](https://github.com/gutermanjunior/Lab3_2026-Exp2Atv1-CRT_Simulation_Electric_Field.git)
+    git clone https://github.com/gutermanjunior/Lab3_2026-Exp2Atv1-CRT_Simulation_Electric_Field.git
     ```
 2.  **Prepare o ambiente:**
     Instale as dependências necessárias:
