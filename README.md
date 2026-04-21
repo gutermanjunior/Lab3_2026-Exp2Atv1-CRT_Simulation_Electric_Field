@@ -14,15 +14,74 @@
 
 ---
 
+> 📘 **Sobre este texto:**  
+> Este é o README do projeto. Aqui você encontra instruções de uso, explicações teóricas e o passo a passo da simulação.  
+> Se estiver em dúvida sobre como rodar ou entender o experimento, comece lendo aqui.
+
+---
+
+![Simulação TRC](figures/bc61f789391ba2fa51f854d83fd9f6ab0ac4b0bb.png)
+
+*Figura: Simulação da trajetória de elétrons no TRC sob ação de campo elétrico obtido via FEMM.*
+
+---
+
+## 🧾 TL;DR
+
+Simulação numérica da trajetória de elétrons em um Tubo de Raios Catódicos (TRC), combinando dados de campo elétrico obtidos via FEMM com integração numérica em Python para modelar a deflexão do feixe e comparar com resultados experimentais.
+
+---
+
+## ⚠️ Comece por aqui (uso rápido para iniciantes)
+
+Se você só quer rodar a simulação, **este é o único arquivo que você precisa baixar:**
+
+📥 **Notebook principal:**  
+[Exp2Atv1 simulacao_TRC Guterman.ipynb](https://github.com/gutermanjunior/Lab3_2026-Exp2Atv1-CRT_Simulation_Electric_Field/blob/main/Exp2Atv1%20simulacao_TRC%20Guterman.ipynb)
+
+---
+
+### 🔽 Como baixar o arquivo
+
+1. Clique no link acima.
+2. Na página do GitHub, clique no botão **"Download"** ou **"Raw"** (canto superior direito).
+3. Salve o arquivo `.ipynb` no seu computador.
+
+---
+
+### ▶️ Como abrir no Google Colab (recomendado)
+
+A forma mais simples de usar o notebook é pelo Google Colab (roda direto no navegador):
+
+1. Acesse: https://colab.research.google.com/
+2. Clique na aba **"Upload" (Enviar)**.
+3. Selecione o arquivo `.ipynb` que você baixou.
+4. Após abrir, vá em **Ambiente de execução → Executar tudo**.
+
+💡 Não é necessário instalar Python nem bibliotecas — o Colab já vem pronto para uso.
+
+---
+
+### ✅ Alternativa (sem baixar)
+
+Você também pode visualizar o notebook diretamente:
+
+👉 GitHub Pages (mais interativo)  
+👉 NBViewer (mais estável)
+
+*(links disponíveis mais abaixo neste README)*
+
+---
+
 ## 📋 Sumário
-1. [Sobre o Projeto](#-sobre-o-projeto)
-2. [Contexto do Experimento](#-contexto-do-experimento)
-3. [Fundamentação Teórica](#-fundamentação-teórica)
-4. [Fluxo de Trabalho (Pipeline)](#-o-fluxo-de-trabalho-pipeline)
-5. [Funcionalidades](#-funcionalidades-do-notebook)
-6. [Estrutura do Repositório](#-estrutura-do-repositório)
-7. [Guia de Instalação e Uso](#-como-usar)
-8. [Resultados](#-exemplo-de-resultado)
+1. [Sobre o Projeto](#-sobre-o-projeto)  
+2. [Contexto do Experimento](#-contexto-do-experimento)  
+3. [Fundamentação Teórica](#️-fundamentação-teórica)  
+4. [Fluxo de Trabalho (Pipeline)](#️-o-fluxo-de-trabalho-pipeline)  
+5. [Funcionalidades](#-funcionalidades-do-notebook)  
+6. [Estrutura do Repositório](#-estrutura-do-repositório)  
+7. [Guia de Instalação e Uso](#-como-usar)  
+8. [Resultados](#-exemplo-de-resultado)  
 9. [Citação](#-como-citar)
 
 ---
@@ -64,13 +123,26 @@ $$dt = \frac{dx}{v_x} = dx \sqrt{\frac{m}{2qV_{ac}}}$$
 
 ## 🛠️ O Fluxo de Trabalho (Pipeline)
 
-Para garantir a reprodutibilidade dos resultados, o fluxo de dados segue rigorosamente estas etapas:
+O projeto segue um pipeline reprodutível que conecta simulação física, extração de dados e análise numérica:
 
-| Etapa | Ferramenta | Descrição |
-| :--- | :--- | :--- |
-| **1. Simulação** | FEMM | Desenho da geometria física e definição das condições de contorno elétricas. |
-| **2. Exportação** | Lua Script | Execução do `script.lua` para gerar uma grade estruturada $(x, y, E_x, E_y, V)$ em `.csv`. |
-| **3. Análise** | Python/Jupyter | Leitura dos dados, interpolação de campo e cálculo iterativo da trajetória. |
+```mermaid
+flowchart LR
+
+A[FEMM - Simulação eletrostática] --> B[Lua Script - Extração de campo elétrico]
+B --> C[CSV estruturado: x, y, Ex, Ey, V]
+C --> D[Python - Interpolação do campo]
+D --> E[Integração numérica: Euler / Verlet]
+E --> F[Trajetória do elétron]
+F --> G[Comparação experimental - dados de bancada]
+
+style A fill:#d9f2d9,stroke:#2e7d32,stroke-width:1px
+style B fill:#e3f2fd,stroke:#1565c0,stroke-width:1px
+style C fill:#fff3e0,stroke:#ef6c00,stroke-width:1px
+style D fill:#ede7f6,stroke:#5e35b1,stroke-width:1px
+style E fill:#fce4ec,stroke:#c2185b,stroke-width:1px
+style F fill:#e0f7fa,stroke:#00838f,stroke-width:1px
+style G fill:#f3e5f5,stroke:#6a1b9a,stroke-width:1px
+```
 
 ---
 
@@ -106,6 +178,7 @@ Caso ocorra algum problema de carregamento ou compatibilidade, utilize a versão
 ├── electric_field_data.csv                # Banco de dados de exemplo (saída do FEMM)
 ├── script.lua                             # Automação para extração de dados no FEMM
 └── README.md                              # Documentação do projeto
+```
 
 ---
 
@@ -113,7 +186,7 @@ Caso ocorra algum problema de carregamento ou compatibilidade, utilize a versão
 
 1.  **Clone o repositório:**
     ```bash
-    git clone [https://github.com/gutermanjunior/Lab3_2026-Exp2Atv1-CRT_Simulation_Electric_Field.git](https://github.com/gutermanjunior/Lab3_2026-Exp2Atv1-CRT_Simulation_Electric_Field.git)
+    git clone https://github.com/gutermanjunior/Lab3_2026-Exp2Atv1-CRT_Simulation_Electric_Field.git
     ```
 2.  **Prepare o ambiente:**
     Instale as dependências necessárias:
