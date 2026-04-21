@@ -145,6 +145,14 @@ Se este código for útil para o seu relatório ou pesquisa, utilize o arquivo `
 
 ---
 
+## 📄 Academic Paper
+
+A formal academic report is available:
+
+👉 [Download PDF](paper/paper.pdf)
+
+---
+
 ## 👨‍🔬 Créditos e Instituição
 
 * **Desenvolvedor:** Guterman Rodrigues de Araujo Junior
