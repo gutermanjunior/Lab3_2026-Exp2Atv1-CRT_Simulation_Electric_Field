@@ -20,7 +20,7 @@
 
 ---
 
-![Simulação TRC](figures/bc61f789391ba2fa51f854d83fd9f6ab0ac4b0bb.png)
+![Simulação TRC](figures/Trajetoria-e-impacto-na-tela.png)
 
 *Figura: Simulação da trajetória de elétrons no TRC sob ação de campo elétrico obtido via FEMM.*
 
